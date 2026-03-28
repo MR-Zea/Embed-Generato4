@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Embed Pro Generator</title>
+    <title>Discord Embed Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -112,11 +112,11 @@
                 const saved = localStorage.getItem('dc_embeds_pro');
                 return saved ? JSON.parse(saved) : [{ 
                     id: 'main',
-                    title: '🚀 Judul Embed Baru', 
-                    description: 'Tulis pesan keren Anda di sini...',
+                    title: '🚀Your Title', 
+                    description: 'Your Description',
                     url: '', color: '#5865f2',
                     author: { name: '', icon_url: '', url: '' },
-                    footer: { text: 'Dibuat dengan Embed Pro', icon_url: '' },
+                    footer: { text: 'Created By ZeaLoTT250', icon_url: '' },
                     image: { url: '' }, thumbnail: { url: '' },
                     fields: [],
                     timestamp: true
@@ -261,7 +261,7 @@
                                 {activeTab === 'fields' && (
                                     <div className="animate-in slide-in-from-left-2 duration-300">
                                         <button onClick={addField} className="w-full py-2.5 rounded bg-[#248046] hover:bg-[#1a6334] text-white font-bold text-xs flex items-center justify-center gap-2 mb-6 transition-colors shadow-lg">
-                                            <Icons.Plus /> TAMBAH FIELD
+                                            <Icons.Plus /> ADD FIELD
                                         </button>
                                         <div className="space-y-4">
                                             {(embeds[0].fields || []).map((f, i) => (
@@ -337,12 +337,12 @@
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-1.5">
-                                            <span className="font-semibold text-white hover:underline cursor-pointer">Embed Pro Bot</span>
+                                            <span className="font-semibold text-white hover:underline cursor-pointer">WEBHOOK URl</span>
                                             <span className="bg-[#5865f2] text-[10px] px-1.5 py-0.5 rounded-[3px] font-bold text-white uppercase tracking-tight flex items-center gap-1 shadow-sm">
                                                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                                                 BOT
                                             </span>
-                                            <span className="text-xs text-[#949ba4] font-medium ml-1">Hari ini pukul 14:30</span>
+                                            <span className="text-xs text-[#949ba4] font-medium ml-1">today</span>
                                         </div>
                                         
                                         {content && (
