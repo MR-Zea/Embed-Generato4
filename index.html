@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,7 +73,7 @@
     <script type="text/babel">
         const { useState, useEffect, useCallback } = React;
 
-        // Ikon SVG Modern
+        // Modern SVG Icons
         const Icons = {
             Plus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>,
             Trash: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>,
@@ -112,7 +112,7 @@
                 const saved = localStorage.getItem('dc_embeds_pro');
                 return saved ? JSON.parse(saved) : [{ 
                     id: 'main',
-                    title: '🚀Your Title', 
+                    title: '🚀 Your Title', 
                     description: 'Your Description',
                     url: '', color: '#5865f2',
                     author: { name: '', icon_url: '', url: '' },
@@ -122,7 +122,7 @@
                     timestamp: true
                 }];
             });
-            const [activeTab, setActiveTab] = useState('konten');
+            const [activeTab, setActiveTab] = useState('content');
             const [isSending, setIsSending] = useState(false);
             const [status, setStatus] = useState(null);
 
@@ -145,7 +145,7 @@
             };
 
             const addField = () => {
-                const newFields = [...(embeds[0].fields || []), { name: 'Nama Field', value: 'Isi Field', inline: true }];
+                const newFields = [...(embeds[0].fields || []), { name: 'Field Name', value: 'Field Content', inline: true }];
                 updateEmbed('fields', newFields);
             };
 
@@ -155,7 +155,7 @@
             };
 
             const handleSend = async () => {
-                if (!webhookUrl) return setStatus({ type: 'error', text: 'Masukkan Webhook URL!' });
+                if (!webhookUrl) return setStatus({ type: 'error', text: 'Enter Webhook URL!' });
                 setIsSending(true);
                 
                 const payload = {
@@ -180,10 +180,10 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    if (res.ok) setStatus({ type: 'success', text: 'Berhasil dikirim!' });
-                    else setStatus({ type: 'error', text: 'Gagal mengirim. Periksa URL.' });
+                    if (res.ok) setStatus({ type: 'success', text: 'Sent successfully!' });
+                    else setStatus({ type: 'error', text: 'Failed to send. Check URL.' });
                 } catch (e) {
-                    setStatus({ type: 'error', text: 'Kesalahan jaringan.' });
+                    setStatus({ type: 'error', text: 'Network error.' });
                 }
                 setIsSending(false);
                 setTimeout(() => setStatus(null), 4000);
@@ -212,7 +212,7 @@
                                 className={`btn-primary px-6 py-2 rounded-md font-bold text-sm text-white flex items-center gap-2 ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
                                 {isSending ? <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/20 border-t-white"></div> : <Icons.Send />}
-                                {isSending ? 'MENGIRIM...' : 'KIRIM'}
+                                {isSending ? 'SENDING...' : 'SEND'}
                             </button>
                         </div>
                     </header>
@@ -221,7 +221,7 @@
                         {/* Editor Sidebar */}
                         <aside className="w-[380px] bg-[#2b2d31] flex flex-col border-r border-[#1e1f22] shadow-xl z-40">
                             <nav className="flex px-4 pt-4 border-b border-[#1e1f22] gap-6 text-sm font-semibold text-[#949ba4]">
-                                {['Konten', 'Author', 'Fields', 'Media', 'Footer'].map(t => (
+                                {['Content', 'Author', 'Fields', 'Media', 'Footer'].map(t => (
                                     <button 
                                         key={t}
                                         onClick={() => setActiveTab(t.toLowerCase())}
@@ -233,15 +233,15 @@
                             </nav>
                             
                             <div className="flex-1 overflow-y-auto p-6 discord-scroll">
-                                {activeTab === 'konten' && (
+                                {activeTab === 'content' && (
                                     <div className="animate-in fade-in duration-300">
-                                        <EmbedInput label="Pesan Teks (Di luar embed)" value={content} onChange={setContent} type="textarea" placeholder="Contoh: @everyone Halo semua!" />
+                                        <EmbedInput label="Text Message (Outside embed)" value={content} onChange={setContent} type="textarea" placeholder="Example: @everyone Hello all!" />
                                         <hr className="my-6 border-[#3e4047]" />
-                                        <EmbedInput label="Judul Embed" value={embeds[0].title} onChange={(v) => updateEmbed('title', v)} placeholder="Judul utama..." />
-                                        <EmbedInput label="URL Judul" value={embeds[0].url} onChange={(v) => updateEmbed('url', v)} placeholder="Link saat judul diklik..." />
-                                        <EmbedInput label="Deskripsi" value={embeds[0].description} onChange={(v) => updateEmbed('description', v)} type="textarea" placeholder="Isi pesan embed..." />
+                                        <EmbedInput label="Embed Title" value={embeds[0].title} onChange={(v) => updateEmbed('title', v)} placeholder="Main title..." />
+                                        <EmbedInput label="Title URL" value={embeds[0].url} onChange={(v) => updateEmbed('url', v)} placeholder="Link when title is clicked..." />
+                                        <EmbedInput label="Description" value={embeds[0].description} onChange={(v) => updateEmbed('description', v)} type="textarea" placeholder="Embed message content..." />
                                         <div className="mb-4">
-                                            <label className="block text-[11px] font-bold uppercase text-[#949ba4] mb-2">Warna Aksen</label>
+                                            <label className="block text-[11px] font-bold uppercase text-[#949ba4] mb-2">Accent Color</label>
                                             <div className="flex gap-3">
                                                 <input type="color" value={embeds[0].color} onChange={(e) => updateEmbed('color', e.target.value)} className="w-12 h-12 rounded cursor-pointer bg-transparent border-none" />
                                                 <input value={embeds[0].color} onChange={(e) => updateEmbed('color', e.target.value)} className="flex-1 input-discord rounded px-3 text-sm font-mono uppercase" />
@@ -252,9 +252,9 @@
 
                                 {activeTab === 'author' && (
                                     <div className="animate-in fade-in duration-300">
-                                        <EmbedInput label="Nama Author" value={embeds[0].author.name} onChange={(v) => updateEmbed('author.name', v)} placeholder="Contoh: Admin Bot" />
-                                        <EmbedInput label="URL Author" value={embeds[0].author.url} onChange={(v) => updateEmbed('author.url', v)} placeholder="Link saat nama diklik..." />
-                                        <EmbedInput label="Ikon Author (URL)" value={embeds[0].author.icon_url} onChange={(v) => updateEmbed('author.icon_url', v)} placeholder="https://..." />
+                                        <EmbedInput label="Author Name" value={embeds[0].author.name} onChange={(v) => updateEmbed('author.name', v)} placeholder="Example: Admin Bot" />
+                                        <EmbedInput label="Author URL" value={embeds[0].author.url} onChange={(v) => updateEmbed('author.url', v)} placeholder="Link when name is clicked..." />
+                                        <EmbedInput label="Author Icon (URL)" value={embeds[0].author.icon_url} onChange={(v) => updateEmbed('author.icon_url', v)} placeholder="https://..." />
                                     </div>
                                 )}
 
@@ -298,22 +298,22 @@
                                     <div className="animate-in fade-in duration-300">
                                         <div className="flex items-center gap-2 mb-6 p-3 bg-blue-500/10 border border-blue-500/20 rounded-md">
                                             <Icons.Image className="text-blue-400" />
-                                            <p className="text-[10px] text-blue-200 leading-tight">Gunakan URL gambar langsung (akhiran .png, .jpg, .gif)</p>
+                                            <p className="text-[10px] text-blue-200 leading-tight">Use direct image URLs (ending in .png, .jpg, .gif)</p>
                                         </div>
-                                        <EmbedInput label="Gambar Besar (Bawah)" value={embeds[0].image.url} onChange={(v) => updateEmbed('image.url', v)} placeholder="https://..." />
-                                        <EmbedInput label="Thumbnail (Kanan Atas)" value={embeds[0].thumbnail.url} onChange={(v) => updateEmbed('thumbnail.url', v)} placeholder="https://..." />
+                                        <EmbedInput label="Large Image (Bottom)" value={embeds[0].image.url} onChange={(v) => updateEmbed('image.url', v)} placeholder="https://..." />
+                                        <EmbedInput label="Thumbnail (Top Right)" value={embeds[0].thumbnail.url} onChange={(v) => updateEmbed('thumbnail.url', v)} placeholder="https://..." />
                                     </div>
                                 )}
 
                                 {activeTab === 'footer' && (
                                     <div className="animate-in fade-in duration-300">
-                                        <EmbedInput label="Teks Footer" value={embeds[0].footer.text} onChange={(v) => updateEmbed('footer.text', v)} placeholder="Bagian paling bawah..." />
-                                        <EmbedInput label="Ikon Footer (URL)" value={embeds[0].footer.icon_url} onChange={(v) => updateEmbed('footer.icon_url', v)} placeholder="https://..." />
+                                        <EmbedInput label="Footer Text" value={embeds[0].footer.text} onChange={(v) => updateEmbed('footer.text', v)} placeholder="Very bottom part..." />
+                                        <EmbedInput label="Footer Icon (URL)" value={embeds[0].footer.icon_url} onChange={(v) => updateEmbed('footer.icon_url', v)} placeholder="https://..." />
                                         <label className="flex items-center gap-3 p-4 bg-[#1e1f22] rounded-md cursor-pointer group">
                                             <input type="checkbox" checked={embeds[0].timestamp} onChange={(e) => updateEmbed('timestamp', e.target.checked)} className="w-5 h-5 accent-[#5865f2]" />
                                             <div className="flex flex-col">
-                                                <span className="text-sm font-bold text-white">Tampilkan Timestamp</span>
-                                                <span className="text-[10px] text-gray-500 uppercase font-bold">Menampilkan waktu saat ini</span>
+                                                <span className="text-sm font-bold text-white">Show Timestamp</span>
+                                                <span className="text-[10px] text-gray-500 uppercase font-bold">Displays current time</span>
                                             </div>
                                         </label>
                                     </div>
@@ -337,7 +337,7 @@
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-1.5">
-                                            <span className="font-semibold text-white hover:underline cursor-pointer">WEBHOOK URl</span>
+                                            <span className="font-semibold text-white hover:underline cursor-pointer">WEBHOOK NAME</span>
                                             <span className="bg-[#5865f2] text-[10px] px-1.5 py-0.5 rounded-[3px] font-bold text-white uppercase tracking-tight flex items-center gap-1 shadow-sm">
                                                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                                                 BOT
@@ -414,7 +414,7 @@
                                                     <span className="font-medium">
                                                         {embeds[0].footer.text}
                                                         {embeds[0].footer.text && embeds[0].timestamp && ' • '}
-                                                        {embeds[0].timestamp && 'Hari ini pukul 14:30'}
+                                                        {embeds[0].timestamp && 'Today at 2:30 PM'}
                                                     </span>
                                                 </div>
                                             )}
